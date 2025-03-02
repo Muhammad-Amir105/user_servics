@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h2>
+    home page
+</h2>
+
+<button><a href="{% url 'logout' %}">Logout</a></button>
+
+{% if user.role == 'vendor' %}
+    <a href=""> Vendor Dashboard</a>
+{% elif user.role == 'customer' %}
+    <a href="">Customer Dashboard</a>
+{% endif %}
+</body>
+</html>

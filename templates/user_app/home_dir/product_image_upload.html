@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Product Images</title>
+</head>
+<body>
+    <h2>Upload Product Images</h2>
+    {% if message %}
+        <p style="color: green;">{{ message }}</p>
+    {% elif error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" id="upload-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="image-fields">
+            <input type="file" name="images">
+        </div>
+        <button type="button" id="add-field">Add More Images</button>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById("add-field").addEventListener("click", function() {
+            let input = document.createElement("input");
+            input.type = "file";
+            input.name = "images";
+            document.getElementById("image-fields").appendChild(input);
+        });
+    </script>
+</body>
+</html>

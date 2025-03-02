@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h2>Home page</h2>
+{% for category in categories %}
+     {% if category.id %}
+
+    <ul>
+    <li>name: {{ category.name }} </li>
+    <li>description: {{ category.description }}</li>
+     {% if user.role == 'vendor' %}
+        <a href="{% url 'delete_category' category.id %}" onclick="return confirmDelete();"><button type="submit">Delete</button></a>
+        <a href="{% url 'update_category' category.id %}"><button type="submit">Update Category</button></a>
+        <a href="{% url 'create_product' category.id %}"><button type="submit">Add Product</button></a>
+    {% endif %}
+    </ul>
+    {% endif %}
+
+{% endfor %}
+{% if user.role == 'vendor' %}
+    <a href="{% url 'create_category' %}"><button>Add Category</button></a>
+{% endif %}
+<a href="{% url 'list_products' %}"><button>List Product</button></a>
+<a href="{% url 'logout' %}"><button>Logout</button></a>
+
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this category?");
+    }
+</script>
+</body>
+</html>

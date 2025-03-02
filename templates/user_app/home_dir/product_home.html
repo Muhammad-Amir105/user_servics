@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>product home</title>
+</head>
+<body>
+<h1>product home</h1>
+{% for product in products %}
+    {% if product.id %}
+
+    <ul>
+    <li>name: {{ product.name }} </li>
+    <li>description: {{ product.description }}</li>
+    <li>price: {{ product.price }}</li>
+    <li>stock: {{ product.stock }}</li>
+    <ui>images:
+    <ul>
+        {% for image in product.images %}
+            <li>
+                image: {{ image.image_url }}
+                {% if user.role == 'vendor' %}
+                <a href="{% url 'delete_product_image' image.id %}"><button>delete image</button></a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    </ui>
+    {% if user.role == 'vendor' %}
+        <a href="{% url 'delete_product' product.id %}"><button>delete product</button></a>
+        <a href="{% url 'upload_images' product.id %}"><button>Upload Images</button></a>
+    {% endif %}
+
+
+    </ul>
+    {% endif %}
+
+{% endfor %}
+{% if user.role == 'vendor' %}
+        <a href="{% url 'list_category' %}"><button>category page</button></a>
+{% endif %}
+<a href="{% url 'logout' %}"><button>Logout</button></a>
+<a href="{{request.META.HTTP_REFERER|escape}}"><button>Back</button></a>
+
+</body>
+</html>
